@@ -39,7 +39,7 @@ local function destoryMusic()
 end
 
 RegisterNetEvent('scriptify_play_music', function(input_one, input_two, input_three, tokenizer)
-    local plyCoords = GetEntityCoords(PlayerPedId(), 0)
+    local plyCoords = GetEntityCoords(PlayerPedId())
     if tokenizer == Config.TokenizerToken then
             if input_three == nil then
                 ESX.ShowNotification(_U('dj_notify_2'))
@@ -61,7 +61,7 @@ RegisterNetEvent('scriptify_destoryMusic', function(tokenizer)
         if tokenizer == Config.TokenizerToken then
             local xSound = exports["xsound"]
             local minDistance = math.huge
-            local plyCoords = GetEntityCoords(PlayerPedId(), 0)
+            local plyCoords = GetEntityCoords(PlayerPedId())
             
             for _, dj in pairs(Config.DJpanels) do
                 for i = 1, #dj.coords, 1 do
@@ -78,14 +78,14 @@ RegisterNetEvent('scriptify_destoryMusic', function(tokenizer)
 end)
 
 Citizen.CreateThread(function()
-    local repeter
-    repeat
-        Citizen.Wait(5)
+    local sleep = 1500
+    while true do
             for k,v in pairs(Config.DJpanels) do
                 for i = 1, #v.coords, 1 do
-                    local plyCoords = GetEntityCoords(PlayerPedId(), 0)
+                    local plyCoords = GetEntityCoords(PlayerPedId())
                     local distance = #(vector3(v.coords[i].x, v.coords[i].y, v.coords[i].z) - plyCoords)
-            if distance < 5 then
+            if distance < 2.5 then
+                sleep = 3
                 if IsControlJustReleased(0, 46) then
                     openPanelDJ()
                 end
@@ -99,5 +99,6 @@ Citizen.CreateThread(function()
                 end
             end
         end
-    until(repeter)
+    Wiat(sleep)
+    end
 end)
