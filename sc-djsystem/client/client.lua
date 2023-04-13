@@ -20,7 +20,7 @@ end
 
 local function CheckNearbyDJ()
     local minDistance = math.huge
-    local plyCoords = GetEntityCoords(PlayerPedId(), 0)
+    local plyCoords = GetEntityCoords(PlayerPedId())
         for _, dj in pairs(Config.DJpanels) do
             for i = 1, #dj.coords, 1 do
             local djDistance = #(vector3(dj.coords[i].x, dj.coords[i].y, dj.coords[i].z) - plyCoords)
@@ -90,7 +90,7 @@ Citizen.CreateThread(function()
                     openPanelDJ()
                 end
             end
-            if distance < 5 and not v.isInZone then
+            if distance < 2.5 and not v.isInZone then
                 lib.showTextUI(_U('dj_showTextUI'))
                 v.isInZone = true
             elseif distance > 5 and v.isInZone then
@@ -99,6 +99,6 @@ Citizen.CreateThread(function()
                 end
             end
         end
-    Wiat(sleep)
+    Wait(sleep)
     end
 end)
